@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby '3.2.1'
+ruby File.read('.ruby-version')
 
 gem 'slack-ruby-client'
 gem 'jira-ruby'
