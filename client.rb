@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'slack-ruby-client'
+require "slack-ruby-client"
 
 module Client
   def slack
     return @slack if @slack
 
     Slack.configure do |config|
-      config.token = required_env_value('SLACK_API_TOKEN')
+      config.token = required_env_value("SLACK_API_TOKEN")
     end
 
     @slack = Slack::Web::Client.new.tap do |slack|
-      slack.send(:connection).headers['Cookie'] = required_env_value('SLACK_COOKIE')
+      slack.send(:connection).headers["Cookie"] = required_env_value("SLACK_COOKIE")
     end
   end
 
@@ -22,7 +22,6 @@ module Client
   end
 
   def config
-    @config ||= JSON.load_file('config.json')
+    @config ||= JSON.load_file("config.json")
   end
 end
-

@@ -2,8 +2,9 @@
 
 source "https://rubygems.org"
 
-ruby File.read('.ruby-version')
+ruby File.read(".ruby-version")
 
-gem 'slack-ruby-client'
-gem 'jira-ruby'
-gem 'pry'
+gem "slack-ruby-client"
+gem "jira-ruby"
+gem "pry"
+gem "standardrb"

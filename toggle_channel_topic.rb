@@ -1,23 +1,25 @@
+#! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative 'client'
+require_relative "client"
+require "pry"
 
 class ToggleChannelTopic
   include Client
 
   def initialize
-    topics = config['toggle_topic'].values_at('topic_1', 'topic_2')
-    @toggle_matrix = Hash[topics.permutation.to_a]
-    @channel = config['channel']
+    options = config["toggle_topic"] || {}
+    @channel = options["channel"]
+    @toggle_matrix = options.values_at("topic_1", "topic_2").permutation.to_h
   end
 
   def call
     info = slack.conversations_info(channel: @channel, as_user: true)
-    current_topic = info.dig('channel', 'topic', 'value') || @toggle_matrix.first.first
+    current_topic = info.dig("channel", "topic", "value")
+    next_topic = @toggle_matrix[current_topic]
+    return puts("Exiting, no next topic :(") if next_topic.nil?
 
-    slack.conversations_setTopic(
-      channel: @channel,
-      topic: @toggle_matrix[current_topic])
+    slack.conversations_setTopic(channel: @channel, topic: next_topic)
   end
 end
 
