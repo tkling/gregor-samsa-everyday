@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../client"
+require_relative "../lib/client"
 
 class ToggleChannelTopic
   include Client
@@ -9,10 +9,10 @@ class ToggleChannelTopic
   def initialize
     options = config["toggle_topic"] || {}
     @channel = options["channel"]
-    @topics = options.values_at("topic_1", "topic_2")
+    @topics = options.values_at(*(topic_names = %w[topic_1 topic_2])).compact
 
     if @topics.size != 2
-      raise ArgumentError, "topic_1 and topic_2 need to be present in #{config_file}"
+      raise ArgumentError, "#{topic_names.join(" & ")} need to be present in #{config_file}"
     end
 
     @toggle_matrix = @topics.permutation.to_h
