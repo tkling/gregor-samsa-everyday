@@ -1,8 +1,7 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "client"
-require "pry"
+require_relative "../client"
 
 class ToggleChannelTopic
   include Client
