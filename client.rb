@@ -21,7 +21,9 @@ module Client
     end
   end
 
+  def config_file = "config.json"
+
   def config
-    @config ||= JSON.load_file("config.json")
+    @config ||= JSON.load_file(config_file)
   end
 end
